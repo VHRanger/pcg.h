@@ -19,7 +19,6 @@ namespace pcg {
 //			next() generates a uniformly distributed uint32_t
 //			next_bounded(uint32_t) generates a bounded uint32_t
 //			next_double() generates a double in [0,1)
-
 class pcg32 {
 	// RNG state.  All values are possible.
 	uint64_t state;
