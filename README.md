@@ -5,19 +5,22 @@ Single header, 100 line implementation of 32bit [PCG random number generator](ht
 # API
 
 Constructor
-    - Based on nanosecond clock and thread id
-    - Should guarantee different rng values in most usecases
-      - You can also manually seed by providing two uint64_t
-      - The first being the seed, second the sequence id
 
-  Generating rng values
-    - next() generates a uniformly distributed uint32_t
+- Based on nanosecond clock and thread id
     
-    - next_bounded(uint32_t) generates a bounded uint32_t (exclusive)
+- Should guarantee different rng values in most usecases
+ - You can also manually seed by providing two uint64_t
+ - The first being the seed, second the sequence id
+
+Generating rng values
+   
+- next() generates a uniformly distributed uint32_t
+
+- next_bounded(uint32_t) generates a bounded uint32_t (exclusive)
+
+- next_double() generates a number in [0,1)
     
-    - next_double() generates a number in [0,1)
-    
-  Requires C++11 for default seeding. Specifically <thread> and <chrono>.
+Requires C++11 for default seeding. Specifically <thread> and <chrono>.
   
 # Example
 
