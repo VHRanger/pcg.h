@@ -18,7 +18,7 @@ Generating rng values
 
 - next_bounded(uint32_t) generates a bounded uint32_t (exclusive)
 
-- next_double() generates a number in [0,1)
+- next_double() generates a double in [0,1)
     
 Requires C++11 for default seeding. Specifically <thread> and <chrono>.
   
