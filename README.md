@@ -24,7 +24,7 @@ Requires C++11 for default seeding. Specifically <thread> and <chrono>.
   
 # Example
 
-    #include "../src/Helpers/pcg.h"
+    #include "pcg.h"
     
     int main() {
         // Create new instance of RNG
