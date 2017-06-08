@@ -14,7 +14,7 @@ namespace pcg {
 //			Based on nanosecond clock and thread id
 //			Should guarantee different rng values in most usecases
 //			--You can also manually seed by providing two uint64_t
-//			--The first being the seed, second the sequence id (which __must__ be odd)
+//			--The first being the seed, second the sequence id
 //
 //		Generating rng values
 //			next() generates a uniformly distributed uint32_t
@@ -23,7 +23,7 @@ namespace pcg {
 class pcg32 {
 	// RNG state.  All values are possible.
 	uint64_t state;
-	// inc controls which RNG sequence (stream) is
+	// Controls which RNG sequence (stream) is
 	// selected. Must *always* be odd.
 	uint64_t inc;     
 public:
@@ -54,14 +54,15 @@ public:
 
 	pcg32(uint64_t sd, uint64_t sequence)
 	{
-		seed(sd, sequence);
+		// Operate on sequence to guarantee it's odd
+		seed(sd, 2 * sequence + 1);
 	}
 
 
-	//Generate a uniformly distributed 32-bit random number
 #pragma warning (push)
 #pragma warning (disable : 4146) //pragmas disable error on intended "unsigned out of range" behavior
 #pragma warning (disable : 4244) 
+	//Generate a uniformly distributed 32-bit random number
 	uint32_t next()
 	{
 		uint64_t oldstate = this->state;
