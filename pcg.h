@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <cmath>
 #include <chrono> // high resolution clock for default seed
 #include <thread> // for default constructor to differ by thread
 
@@ -15,7 +14,7 @@ namespace pcg {
 //			Based on nanosecond clock and thread id
 //			Should guarantee different rng values in most usecases
 //			--You can also manually seed by providing two uint64_t
-//			--The first being the seed, second the sequence id
+//			--The first being the seed, second the sequence id (which __must__ be odd)
 //
 //		Generating rng values
 //			next() generates a uniformly distributed uint32_t
@@ -24,7 +23,7 @@ namespace pcg {
 class pcg32 {
 	// RNG state.  All values are possible.
 	uint64_t state;
-	// Controls which RNG sequence (stream) is
+	// inc controls which RNG sequence (stream) is
 	// selected. Must *always* be odd.
 	uint64_t inc;     
 public:
@@ -105,21 +104,21 @@ public:
 				return r % bound;
 		}
 	}
-		
-		
+
+
 	// Generate next number as a double in [0,1)
-	// Precise to 1/2^32
+	//
+	// Sebastiano Vigna's method of converting uint -> float
+	// Exploits the 24 bits of mantissa in 32 bit IEEE float
+	//
+	// This conversion guarantees that all dyadic rationals 
+	// of the form k / 2^-24 will be equally likely.
+	//     Note that this conversion prefers the high bits of x, 
+	//     but you can alternatively use the lowest bits.
+	//
 	double next_double()
 	{
-		return std::ldexp(next(), -32);
-	}	
-
-
-	// Different version of next_double
-	double next_double2()
-	{
-		return (next() >> 11) * (1. / (UINT64_C(1) << 53));
+		return (next() >> 8) * (1. / ((uint32_t) 1 << 24));
 	}
-
 };
 }
