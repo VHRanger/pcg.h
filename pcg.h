@@ -19,7 +19,7 @@ namespace pcg {
 //		Generating rng values
 //			next() generates a uniformly distributed uint32_t
 //			next_bounded(uint32_t) generates a bounded uint32_t
-//			next_double() generates a double in [0,1)
+//			next_float() generates a float in [0,1)
 class pcg32 {
 	// RNG state.  All values are possible.
 	uint64_t state;
@@ -107,7 +107,7 @@ public:
 	}
 
 
-	// Generate next number as a double in [0,1)
+	// Generate next number as a float in [0,1)
 	//
 	// Sebastiano Vigna's method of converting uint -> float
 	// Exploits the 24 bits of mantissa in 32 bit IEEE float
@@ -117,9 +117,12 @@ public:
 	//     Note that this conversion prefers the high bits of x, 
 	//     but you can alternatively use the lowest bits.
 	//
-	double next_double()
+	// Class name is a lie. Since we can only generate
+	//
+	//
+	float next_float()
 	{
-		return (next() >> 8) * (1. / ((uint32_t) 1 << 24));
+		return (next() >> 8) * (1.f / ((uint32_t) 1 << 24));
 	}
 };
 }
