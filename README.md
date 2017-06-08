@@ -1,6 +1,15 @@
 # pcg.h
 Single header, 100 line implementation of 32bit [PCG random number generator](http://www.pcg-random.org/).
 
+**Advantages**
+
+- Blazingly fast generation of uint32 and 32bit floats in [0,1)
+
+- Each rng class instance only takes 128bits of memory (two uint64)
+
+**Disadvantages**
+
+Doesn't conform to full C++11 rng engine requirements. It's a very simple rng that produces output fast.
 
 # API
 
@@ -18,7 +27,7 @@ Generating rng values
 
 - next_bounded(uint32_t) generates a bounded uint32_t (exclusive)
 
-- next_double() generates a double in [0,1)
+- next_float() generates a float in [0,1)
     
 Requires C++11 for default seeding. Specifically <thread> and <chrono>.
   
@@ -33,7 +42,7 @@ Requires C++11 for default seeding. Specifically <thread> and <chrono>.
 
         for (int i = 0; i < 99; ++i) {
             std::cout << rng.next() << std::endl;
-            std::cout << rng.next_double() << std::endl;
+            std::cout << rng.next_float() << std::endl;
             std::cout << rng.next_bounded(101) << std::endl;
         }
 
