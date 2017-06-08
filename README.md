@@ -18,8 +18,8 @@ Constructor
 - Based on nanosecond clock and thread id
     
 - Should guarantee different rng values in most usecases
- - You can also manually seed by providing two uint64_t
- - The first being the seed, second the sequence id
+    - You can also manually seed by providing two uint64_t
+    - The first being the seed, second the sequence id
 
 Generating rng values
    
@@ -29,7 +29,7 @@ Generating rng values
 
 - next_float() generates a float in [0,1)
     
-Requires C++11 for default seeding. Specifically <thread> and <chrono>.
+Requires C++11 for default seeding. Specifically `<thread>` and `<chrono>`.
   
 # Example
 
@@ -37,7 +37,7 @@ Requires C++11 for default seeding. Specifically <thread> and <chrono>.
     
     int main() {
         // Create new instance of RNG
-        // Default seed is thread safe and nanosecond-time based
+        // Default seed is different for all threads and nanosecond-time based
         pcg::pcg32 rng;
 
         for (int i = 0; i < 99; ++i) {
