@@ -116,10 +116,6 @@ public:
 	// of the form k / 2^-24 will be equally likely.
 	//     Note that this conversion prefers the high bits of x, 
 	//     but you can alternatively use the lowest bits.
-	//
-	// Class name is a lie. Since we can only generate
-	//
-	//
 	float next_float()
 	{
 		return (next() >> 8) * (1.f / ((uint32_t) 1 << 24));
