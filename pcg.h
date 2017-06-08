@@ -1,10 +1,12 @@
 #pragma once
-#include <inttypes.h>
+#include <cstdint>
+#include <cmath>
 #include <chrono> // high resolution clock for default seed
 #include <thread> // for default constructor to differ by thread
 
 namespace pcg {
-	
+	using std::uint64_t;
+	using std::uint32_t;
 //
 // PCG32 basic reworked in a class
 // 	
@@ -46,8 +48,8 @@ public:
 		// hash function to get uint from thread id
 		std::hash<std::thread::id> pcg_hasher;
 		// seed on high res clock and thread id
-		seed((uint64_t) sd ^ (intptr_t)&printf, 
-				(uint64_t) pcg_hasher(std::this_thread::get_id()));
+		seed((uint64_t) sd, 
+			 2 * (uint64_t) pcg_hasher(std::this_thread::get_id()) + 1 );
 	}
 
 
@@ -69,7 +71,7 @@ public:
 		uint32_t rot = oldstate >> 59u;
 		return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
 	}
-
+#pragma warning (pop)
 		
 	//     Generate a uniformly distributed number, r, where 0 <= r < bound
 	uint32_t next_bounded(uint32_t bound)
@@ -107,10 +109,17 @@ public:
 		
 	// Generate next number as a double in [0,1)
 	// Precise to 1/2^32
-	uint32_t next_double()
+	double next_double()
 	{
-		return ldexp(next(), -32);
+		return std::ldexp(next(), -32);
 	}	
+
+
+	// Different version of next_double
+	double next_double2()
+	{
+		return (next() >> 11) * (1. / (UINT64_C(1) << 53));
+	}
+
 };
-#pragma warning (pop)
 }
