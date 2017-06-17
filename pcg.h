@@ -71,7 +71,7 @@ public:
 		uint32_t rot = oldstate >> 59u;
 		return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
 	}
-#pragma warning (pop)
+	
 		
 	//     Generate a uniformly distributed number, r, where 0 <= r < bound
 	uint32_t next_bounded(uint32_t bound)
@@ -105,7 +105,7 @@ public:
 				return r % bound;
 		}
 	}
-
+	
 
 	// Generate next number as a float in [0,1)
 	//
@@ -120,5 +120,6 @@ public:
 	{
 		return (next() >> 8) * (1.f / ((uint32_t) 1 << 24));
 	}
+#pragma warning (pop)
 };
 }
