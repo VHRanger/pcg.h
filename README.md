@@ -3,9 +3,11 @@ Single header, 100 line implementation of 32bit [PCG random number generator](ht
 
 **Advantages**
 
-- Blazingly fast generation of uint32 and 32bit floats in [0,1)
+- Blazingly fast^1 generation of uint32 and 32bit floats in [0,1)
 
 - Each rng class instance only takes 128bits of memory (two uint64)
+
+1. It's the closest to "as fast as possible" as I can make it
 
 **Disadvantages**
 
